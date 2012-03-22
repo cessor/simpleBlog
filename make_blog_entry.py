@@ -10,18 +10,20 @@ def read_json():
     title = data["title"]
     text = data["text"]
     timestamp = data["timestamp"]
-    print title, text, timestamp
+    #print title, text, timestamp
     storage.append((title, text, timestamp))
+  storage.sort(key=lambda timestamp: timestamp[2])
+  #print storage
   return storage
 
 def write_html():
   data = read_json()
-  print data
+  #print data
   f = open('./index.html', 'w')
-  f.write("<html><body>")
+  f.write("<html><body>\n")
 
   for i in data:
-    f.write("<h1>{0}</h1><p>{1}<br /><br />{2}</p>".format(*i))
+    f.write("<h1>{0}</h1><p>{1}<br /><br />{2}</p>\n".format(*i))
 
   f.write("</body></html>")
   f.close()
