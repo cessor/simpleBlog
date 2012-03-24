@@ -1,0 +1,45 @@
+body {
+    font-family: Helvetica, Arial, Verdana, sans-serif;
+    margin-top: 0px;
+    font-size: 14px;
+    color: #333;
+}
+
+h1 {
+    text-align: right;
+    margin-left: -12px;
+}
+
+h2 {
+    text-align: right;
+    margin-left: -12px;
+}
+
+h3, h3 a, h3 a:hover  {
+    color: white;
+    background-color: #333;
+    text-decoration: none;
+    color: white;
+    text-decoration: none;
+}
+
+p {
+    width: 950px;
+    padding-left: 10px;
+}
+
+a,
+a:active {
+    text-decoration: underline;
+    color: #222222;
+}
+
+a:visited {
+    text-decoration: underline;
+    color; #222222;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+

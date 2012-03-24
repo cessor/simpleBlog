@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 from glob import glob
 import json
 
+blogname="<h1>.::a small blog</h1>"
+
 html="<!DOCTYPE html>" + \
      "<html>" + \
      "<head>" + \
@@ -11,6 +13,8 @@ html="<!DOCTYPE html>" + \
      "<link rel='stylesheet' href='simple.css' type='text/css'>" + \
      "<body>\n"
 
+html+=blogname
+
 def read_json():
   storage = []
 
@@ -19,12 +23,13 @@ def read_json():
     data = json.loads(f)
     title = data["title"]
     text = data["text"]
+    author = data["author"]
     timestamp = data["timestamp"]
-    #print title, text, timestamp
-    storage.append((title, text, timestamp))
+    #print title, text, author, timestamp
+    storage.append((title, text, author, timestamp))
 
-  storage.sort(key=lambda timestamp: timestamp[2])
-  #print storage
+  storage.sort(key=lambda timestamp: timestamp[3])
+  print storage
   return storage
 
 def create_html(html):
@@ -32,22 +37,29 @@ def create_html(html):
   #print data
 
   for index, item in enumerate(data):
-    html+="<h1>"
+    html+="<h2>"
+    for i in item[3]:
+        html+=i
+    html+="</h2>"
+
+    html+="<h3>"
     for i in item[0]:
         html+=i
-    html+="</h1>"
+    html+="</h3>"
 
     html+="<p>"
     for i in item[1]:
         html+=i
 
+    html+="<br />author: "
     for i in item[2]:
-        html+="<br />"+i
+        html+=i
     html+="</p>"
 
-  html += "</body></html>"
+  html+="</body></html>"
   return html
 
 f = open('./index.html', 'w')
 f.write(create_html(html))
+print html
 f.close()
