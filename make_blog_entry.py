@@ -61,7 +61,8 @@ def create_html(html):
   html+="</body></html>"
   return html
 
-f = open('./index.html', 'w')
-f.write(create_html(html))
-if debug: print html
-f.close()
+if __name__ == "__main__":
+  f = open('./index.html', 'w')
+  f.write(create_html(html))
+  if debug: print html
+  f.close()
