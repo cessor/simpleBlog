@@ -28,8 +28,8 @@ def read_json():
     #print title, text, author, timestamp
     storage.append((title, text, author, timestamp))
 
-  storage.sort(key=lambda timestamp: timestamp[3])
-  print storage
+  storage.sort(key=lambda timestamp: timestamp[3], reverse=True)
+  #print storage
   return storage
 
 def create_html(html):
@@ -61,5 +61,5 @@ def create_html(html):
 
 f = open('./index.html', 'w')
 f.write(create_html(html))
-print html
+#print html
 f.close()
