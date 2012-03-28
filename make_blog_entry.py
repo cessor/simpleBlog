@@ -3,6 +3,7 @@ from glob import glob
 import json
 
 blogname="<h1>.::a small blog</h1>"
+debug=False
 
 html="<!DOCTYPE html>" + \
      "<html>" + \
@@ -25,16 +26,17 @@ def read_json():
     text = data["text"]
     author = data["author"]
     timestamp = data["timestamp"]
-    #print title, text, author, timestamp
+
+    if debug: print title, text, author, timestamp
     storage.append((title, text, author, timestamp))
 
   storage.sort(key=lambda timestamp: timestamp[3], reverse=True)
-  #print storage
+  if debug: print storage
   return storage
 
 def create_html(html):
   data = read_json()
-  #print data
+  if debug: print data
 
   for index, item in enumerate(data):
     html+="<h2>"
@@ -61,5 +63,5 @@ def create_html(html):
 
 f = open('./index.html', 'w')
 f.write(create_html(html))
-#print html
+if debug: print html
 f.close()
