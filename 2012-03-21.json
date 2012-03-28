@@ -1,6 +1,6 @@
 {
-"author":"example author",
+"author":"example {author}",
 "title":"first title",
 "text":"another text",
-"timestamp":"1"
+"timestamp":"2012-03-21"
 }
