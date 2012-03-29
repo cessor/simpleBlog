@@ -1,68 +1,47 @@
 from __future__ import unicode_literals
 from glob import glob
+from sys import argv
+from convert_date import convert_date
 import json
+blog_name = ".::a small blog"
+debug = True
 
-blogname="<h1>.::a small blog</h1>"
-debug=False
-
-html="<!DOCTYPE html>" + \
-     "<html>" + \
-     "<head>" + \
-     "<meta charset='utf-8'>" + \
-     "<title>simpleBlog</title>" + \
-     "</head>" + \
-     "<link rel='stylesheet' href='simple.css' type='text/css'>" + \
-     "<body>\n"
-
-html+=blogname
+def read_json_object(path): 
+  return json.load(open(path, 'r'))
 
 def read_json():
-  storage = []
+  entries = []
+  for path in glob('./*.json'):
+    object = read_json_object(path)
+    object["date"] = convert_date(object["timestamp"])
+    entries.append(object)
+  by_date = lambda object: object["date"]
+  entries.sort(key=by_date, reverse=True)
+  return entries
+  
+def read_all(path):
+  content = ""
+  with open(path, 'r') as file:
+    content = file.read()
+  return content
+  
+def create_html():
+  page = read_all("page.template")
+  entries = read_json()
+  content = ""
+  for entry in entries:
+    content += create_entry(entry) # this is bad, use stringio instead
+  view_data = { "blog_name" : blog_name, "text" : content }
+  return template(page, view_data)
 
-  for i in glob('./*.json'):
-    f = open(i).read()
-    data = json.loads(f)
-    title = data["title"]
-    text = data["text"]
-    author = data["author"]
-    timestamp = data["timestamp"]
-
-    if debug: print title, text, author, timestamp
-    storage.append((title, text, author, timestamp))
-
-  storage.sort(key=lambda timestamp: timestamp[3], reverse=True)
-  if debug: print storage
-  return storage
-
-def create_html(html):
-  data = read_json()
-  if debug: print data
-
-  for index, item in enumerate(data):
-    html+="<h2>"
-    for i in item[3]:
-        html+=i
-    html+="</h2>"
-
-    html+="<h3>"
-    for i in item[0]:
-        html+=i
-    html+="</h3>"
-
-    html+="<p>"
-    for i in item[1]:
-        html+=i
-
-    html+="<br />author: "
-    for i in item[2]:
-        html+=i
-    html+="</p>"
-
-  html+="</body></html>"
-  return html
+def create_entry(entry): # this is called per loop ant therefore inefficient, cache it!
+  text = read_all("entry.template")
+  return template(text, entry)
+  
+def template(text, map): 
+  for field in map:
+    text = text.replace("$%s$" % field, map[field]) # also slow
+  return text
 
 if __name__ == "__main__":
-  f = open('./index.html', 'w')
-  f.write(create_html(html))
-  if debug: print html
-  f.close()
+  print create_html()
