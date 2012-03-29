@@ -1,5 +1,5 @@
 body {
-    font-family: Helvetica, Arial, Verdana, sans-serif;
+    font-family: Arial, sans-serif;
     margin-top: 0px;
     font-size: 14px;
     color: #333;
@@ -28,6 +28,12 @@ p {
     padding-left: 10px;
 }
 
+pre {
+    font-family: monospace;
+    font-size: 12px;
+    padding-left: 20px;
+}
+
 a,
 a:active {
     text-decoration: underline;
@@ -46,3 +52,4 @@ a:hover {
 .author {
     padding-left: 10px;
 }
+
