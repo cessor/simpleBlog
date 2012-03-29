@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from json import load
 from glob import glob
-from convert_date import convert_date
 from datetime import datetime
 
 class Template:

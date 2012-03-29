@@ -1,7 +1,7 @@
 import unittest
 import json
 import os
-from make_blog_entry import *
+from simpleBlog import read_json_object
 
 class BlogTests(unittest.TestCase):
 	@classmethod
