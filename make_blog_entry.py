@@ -1,68 +1,23 @@
 from __future__ import unicode_literals
-from glob import glob
-import json
+from template import Template
+from entries import Entries
 
-blogname="<h1>.::a small blog</h1>"
-debug=False
-
-html="<!DOCTYPE html>" + \
-     "<html>" + \
-     "<head>" + \
-     "<meta charset='utf-8'>" + \
-     "<title>simpleBlog</title>" + \
-     "</head>" + \
-     "<link rel='stylesheet' href='simple.css' type='text/css'>" + \
-     "<body>\n"
-
-html+=blogname
-
-def read_json():
-  storage = []
-
-  for i in glob('./*.json'):
-    f = open(i).read()
-    data = json.loads(f)
-    title = data["title"]
-    text = data["text"]
-    author = data["author"]
-    timestamp = data["timestamp"]
-
-    if debug: print title, text, author, timestamp
-    storage.append((title, text, author, timestamp))
-
-  storage.sort(key=lambda timestamp: timestamp[3], reverse=True)
-  if debug: print storage
-  return storage
-
-def create_html(html):
-  data = read_json()
-  if debug: print data
-
-  for index, item in enumerate(data):
-    html+="<h2>"
-    for i in item[3]:
-        html+=i
-    html+="</h2>"
-
-    html+="<h3>"
-    for i in item[0]:
-        html+=i
-    html+="</h3>"
-
-    html+="<p>"
-    for i in item[1]:
-        html+=i
-
-    html+="<br />author: "
-    for i in item[2]:
-        html+=i
-    html+="</p>"
-
-  html+="</body></html>"
-  return html
+blog_name = ".::a small blog"
+  
+def create_page(): 
+  content = create_markup_for_all(Entries())
+  view_data = { "blog_name" : blog_name, "content" : content }
+  return Template('templates/page.template', view_data)
+  
+def create_markup_for_all(entries):
+  markup = ""
+  for entry in Entries():   
+    markup += str(Template("templates/entry.template", entry)) 
+  return markup
 
 if __name__ == "__main__":
-  f = open('./index.html', 'w')
-  f.write(create_html(html))
-  if debug: print html
-  f.close()
+  print create_page()
+  
+# Remarks: 
+   # Calling Template per loop does I/O and should be cached instead!
+   # The String concatenation is also slow
