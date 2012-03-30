@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from json import load
 from glob import glob
 from datetime import datetime
+from sys import argv
 
 def read(path):
   content = ""
@@ -18,8 +19,8 @@ def template(stencil, map):
 
 blog_name = ".::a small blog"
 
-def create_page():
-  content = create_markup_for_all(Entries())
+def create_page(entries):
+  content = create_markup_for_all(entries)
   view_data = { "blog_name" : blog_name, "content" : content }
   stencil = read("templates/page.template")
   return template(stencil, view_data)
@@ -41,6 +42,9 @@ class Entries:
       object["date"] = convert_date(object["timestamp"])
       entries.append(object)
     return entries
+
+  def written_on(self, date):
+    return [ entry for entry in self.__iter__() if entry["timestamp"] == date ]
 
   def sort_by_date(self, entries):
     by_date = lambda object: object["timestamp"]
@@ -68,4 +72,9 @@ def convert_date(date):
 ####################################################
 
 if __name__ == "__main__":
-  print create_page()
+  if len(argv) == 1:
+    entries = Entries()
+  else:
+    date = argv[1]
+    entries = Entries().written_on(date)
+  print create_page(entries)
