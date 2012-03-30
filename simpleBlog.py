@@ -3,25 +3,16 @@ from json import load
 from glob import glob
 from datetime import datetime
 
-class Template:
-  def __init__(self, path, view_data):
-    self.path = path
-    self.view_data = view_data
+def read(path):
+  content = ""
+  with open(path, 'r') as file:
+    content = file.read()
+  return content
 
-  def read(self, path):
-    content = ""
-    with open(path, 'r') as file:
-      content = file.read()
-    return content
-
-  def template(self, stencil, map):
-    for field in map:
-      stencil = stencil.replace("$%s$" % field, map[field])
-    return stencil
-
-  def __str__(self):
-    stencil = self.read(self.path)
-    return self.template(stencil, self.view_data)
+def template(stencil, map):
+  for field in map:
+    stencil = stencil.replace("$%s$" % field, map[field])
+  return stencil
 
 ####################################################
 
@@ -30,12 +21,14 @@ blog_name = ".::a small blog"
 def create_page():
   content = create_markup_for_all(Entries())
   view_data = { "blog_name" : blog_name, "content" : content }
-  return Template('templates/page.template', view_data)
+  stencil = read("templates/page.template")
+  return template(stencil, view_data)
 
 def create_markup_for_all(entries):
   markup = ""
-  for entry in Entries():
-    markup += str(Template("templates/entry.template", entry))
+  stencil = read("templates/entry.template")
+  for entry in entries:
+    markup += template(stencil, entry)
   return markup
 
 ####################################################
@@ -71,6 +64,8 @@ def reformat_date(date):
 
 def convert_date(date):
   return reformat_date(parse_date(date))
+
+####################################################
 
 if __name__ == "__main__":
   print create_page()
