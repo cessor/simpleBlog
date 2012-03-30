@@ -5,22 +5,15 @@ body {
     color: #333;
 }
 
-h1 {
-    text-align: right;
-    margin-left: -12px;
-}
-
-h2 {
+h1, h2 {
     text-align: right;
     margin-left: -12px;
 }
 
 h3, h3 a, h3 a:hover  {
-    color: white;
     background-color: #333;
     text-decoration: none;
     color: white;
-    text-decoration: none;
 }
 
 p {
@@ -35,14 +28,9 @@ pre {
 }
 
 a,
-a:active {
+a:active, a:visited {
     text-decoration: underline;
     color: #222222;
-}
-
-a:visited {
-    text-decoration: underline;
-    color; #222222;
 }
 
 a:hover {
@@ -53,3 +41,5 @@ a:hover {
     padding-left: 10px;
 }
 
+.entry {
+}
