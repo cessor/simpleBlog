@@ -7,27 +7,24 @@ from sys import argv
 blog_name = ".::a small blog"
 
 def read(path):
-  content = ""
   with open(path, 'r') as file:
-    content = file.read()
-  return content
-
+    return file.read()
+  
 def template(stencil, map):
   for field in map:
     stencil = stencil.replace("$%s$" % field, map[field])
   return stencil
 
 def create_page(entries):
-  content = create_markup_for_all(entries)
-  view_data = { "blog_name" : blog_name, "content" : content }
-  stencil = read("templates/page.template")
-  return template(stencil, view_data)
+  markup_for_entries = create_markup_for_all(entries)
+  view_data = { "blog_name" : blog_name, "content" : markup_for_entries }
+  page_stencil = read("templates/page.template")
+  return template(page_stencil, view_data)
 
 def create_markup_for_all(entries):
-  markup = ""
-  stencil = read("templates/entry.template")
-  for entry in entries:
-    markup += template(stencil, entry)
+  entry_stencil = read("templates/entry.template")
+  templates = [template(entry_stencil, entry) for entry in entries]
+  markup = ''.join(templates) # fast :) 
   return markup
 
 ####################################################
@@ -62,9 +59,6 @@ class DateFormat:
   def __init__(self,date):
     self.date = date
 
-  def convert(self, date):
-    return self.reformat(self.parse(date))
-
   def parse(self,date):
     return datetime.strptime(date, "%Y-%m-%d")
 
@@ -72,7 +66,7 @@ class DateFormat:
     return datetime.strftime(date, "%A, %d. %B %Y")
 
   def __str__(self):
-    return self.convert(self.date)
+    return self.reformat(self.parse(self.date))
 
 ####################################################
 
