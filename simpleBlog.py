@@ -4,6 +4,8 @@ from glob import glob
 from datetime import datetime
 from sys import argv
 
+blog_name = ".::a small blog"
+
 def read(path):
   content = ""
   with open(path, 'r') as file:
@@ -14,10 +16,6 @@ def template(stencil, map):
   for field in map:
     stencil = stencil.replace("$%s$" % field, map[field])
   return stencil
-
-####################################################
-
-blog_name = ".::a small blog"
 
 def create_page(entries):
   content = create_markup_for_all(entries)
@@ -38,8 +36,8 @@ class Entries:
   def read(self):
     entries = []
     for path in glob('./entries/*.json'):
-      object = read_json_object(path)
-      object["date"] = convert_date(object["timestamp"])
+      object = self.read_json_object(path)
+      object["date"] = str(DateFormat(object["timestamp"]))
       entries.append(object)
     return entries
 
@@ -55,19 +53,26 @@ class Entries:
     self.sort_by_date(entries)
     return entries.__iter__()
 
-def read_json_object(path):
-  return load(open(path, 'r'))
+  def read_json_object(self,path):
+    return load(open(path, 'r'))
 
 ####################################################
 
-def parse_date(date):
-  return datetime.strptime(date, "%Y-%m-%d")
+class DateFormat:
+  def __init__(self,date):
+    self.date = date
 
-def reformat_date(date):
-  return datetime.strftime(date, "%A, %d. %B %Y")
+  def convert(self, date):
+    return self.reformat(self.parse(date))
 
-def convert_date(date):
-  return reformat_date(parse_date(date))
+  def parse(self,date):
+    return datetime.strptime(date, "%Y-%m-%d")
+
+  def reformat(self,date):
+    return datetime.strftime(date, "%A, %d. %B %Y")
+
+  def __str__(self):
+    return self.convert(self.date)
 
 ####################################################
 
