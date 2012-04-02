@@ -1,45 +1,64 @@
+/* Red: ff2c00 */
+/* Orange: ffb600 */
+/* Blue: 00b9ff */
+
+
 body {
     font-family: Arial, sans-serif;
-    margin-top: 0px;
-    font-size: 14px;
+    margin: 50px;
+	padding: 0;
+    font-size: 20px;
     color: #333;
 }
 
-h1, h2 {
-    text-align: right;
-    margin-left: -12px;
+h1 {
+	display: block;
+	margin: 0 0 25px 0;
+	padding: 0;
+	font-size: 42px;
+	line-height: 32px;
+	color: white;
 }
 
-h3, h3 a, h3 a:hover  {
-    background-color: #333;
-    text-decoration: none;
-    color: white;
+h1 a {
+	color: white;
 }
 
-p {
-    width: 950px;
-    padding-left: 10px;
+.header a.title {
+	color: #666;
+	font-size: 42px;
+	margin: 0;
 }
 
-pre {
-    font-family: monospace;
-    font-size: 12px;
-    padding-left: 20px;
+.date, .author {
+	color: #ffb600;
 }
 
-a,
-a:active, a:visited {
-    text-decoration: underline;
-    color: #222222;
+.header a.title:link, .header a.title:link {
+	text-decoration: underline;
 }
 
-a:hover {
-    text-decoration: underline;
+.description {
+	margin: 0;
+	color: white;
+	font-size: 24px;
+	font-family: Arial Narrow, Arial, sans-serif;
+	text-decoration: none;
 }
 
-.author {
-    padding-left: 10px;
+.entry { 
+	background-color: #00B7FF;
+	margin: 50px 0;
+	padding: 50px;
 }
 
-.entry {
+
+
+.content {
+	color: white;
+}
+
+.content a:link, .content a:visited {
+	color: #ffb600;
+	text-decoration: underline lime;
 }

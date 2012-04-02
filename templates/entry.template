@@ -1,9 +1,8 @@
 
 <div class="entry">
-    <h2>$date$</h2>
-    <h3>
-       <a href="$timestamp$">$title$</a>
-    </h3>
-    <p>$text$</p>
-    <div class="author">created by: $author$</div>
+    <h1>
+		<a class="title" href="$timestamp$">$title$</a>
+		<div class="description"><span class="date">$date$</span>, by <span class="author">$author$</span></div>
+	</h1>
+    <div class="content">$text$</div>
 </div>

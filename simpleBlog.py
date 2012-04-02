@@ -4,7 +4,7 @@ from glob import glob
 from datetime import datetime
 from sys import argv
 
-blog_name = ".::a small blog"
+blog_name = "A Python Blog"
 
 def read(path):
   with open(path, 'r') as file:
