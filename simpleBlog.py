@@ -70,10 +70,13 @@ class DateFormat:
 
 ####################################################
 
-if __name__ == "__main__":
+def main():
   if len(argv) == 1:
     entries = Entries()
   else:
     date = argv[1]
     entries = Entries().written_on(date)
   print create_page(entries)
+
+if __name__ == "__main__":
+  main()
