@@ -1,1 +1,6 @@
-Before running serve you should install flask into a virtualenv 
+Before running serve you should install flask into a virtualenv!
+
+The app runs standalone from commandline if you just exec simpleBlog.py.
+
+I pushed this app to heroku using these instructions. They also help with Flask, Virtualenv, and pip.
+https://devcenter.heroku.com/articles/python
