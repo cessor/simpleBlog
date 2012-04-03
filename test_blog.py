@@ -1,10 +1,11 @@
 import unittest
 import json
 import os
-from simpleBlog import Entries
-from simpleBlog import *
+import entries
+from simpleblog import *
 
 class BlogTests(unittest.TestCase):
+	
 	@classmethod
 	def setUpClass(self):
 		pass
@@ -16,10 +17,14 @@ class BlogTests(unittest.TestCase):
 		markup = ''.join(templates) 
 		# print markup
 		
+	def test_replace_twitter_names(self):
+		text = "@cessor" 
+		text = filter(text)
+		self.assertEqual(text, "<a href='https://twitter.com/cessor'>@cessor</a>")
+		
 	@classmethod
 	def tearDownClass(self):
 		pass
-		
 
 def read_json_object(path):
 	return load(open(path, 'r'))

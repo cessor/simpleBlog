@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
-
 from entries import Entries
 from sys import argv
+import re
 
 blog_name = "A Python Blog"
 
@@ -26,13 +26,20 @@ def create_markup_for_all(entries):
   markup = ''.join(templates) # fast :) 
   return markup
  
+def filter(markup):
+  link = "REPL"
+  #return re.sub("", , )
+  return markup
+
 def main():
   if len(argv) == 1:
     entries = Entries()
   else:
     date = argv[1]
     entries = Entries().written_on(date)
-  print create_page(entries)
+  markup = create_page(entries)
+  markup = filter(markup)
+  print markup
 
 if __name__ == "__main__":
   main()
